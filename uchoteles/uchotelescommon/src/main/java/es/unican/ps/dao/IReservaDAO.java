@@ -5,7 +5,7 @@ import es.unican.ps.domain.Reserva;
 
 public interface IReservaDAO {
     
-    public List<Reserva> reservaes();
+    public List<Reserva> reservas();
 
     public Reserva reserva(int id);
 

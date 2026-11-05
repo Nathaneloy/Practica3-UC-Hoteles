@@ -2,7 +2,9 @@ package es.unican.ps.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +34,7 @@ public class Hotel implements Serializable{
     private int id;
     @OneToMany 
     @JoinColumn(name="Hotel_FK")
-    private List<Habitacion> habitaciones;
+    private Map<TipoHabitacion, Habitacion> habitaciones;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Categoria categoria;
@@ -46,7 +48,7 @@ public class Hotel implements Serializable{
         this.id = id;
         this.categoria = categoria;
 
-        habitaciones = new ArrayList<>();
+        habitaciones = new HashMap<>();
     }
     public String getNombre() {
         return nombre;
@@ -72,14 +74,53 @@ public class Hotel implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-    public List<Habitacion> getHabitaciones() {
+    public Map<TipoHabitacion, Habitacion> getHabitaciones() {
         return habitaciones;
+    }
+    public void setHabitaciones(Map<TipoHabitacion, Habitacion> habitaciones) {
+        this.habitaciones = habitaciones;
     }
     public Categoria getCategoria() {
         return categoria;
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Hotel other = (Hotel) obj;
+        if (nombre == null) {
+            if (other.nombre != null)
+                return false;
+        } else if (!nombre.equals(other.nombre))
+            return false;
+        if (direccion == null) {
+            if (other.direccion != null)
+                return false;
+        } else if (!direccion.equals(other.direccion))
+            return false;
+        if (localidad == null) {
+            if (other.localidad != null)
+                return false;
+        } else if (!localidad.equals(other.localidad))
+            return false;
+        if (id != other.id)
+            return false;
+        if (habitaciones == null) {
+            if (other.habitaciones != null)
+                return false;
+        } else if (!habitaciones.equals(other.habitaciones))
+            return false;
+        if (categoria != other.categoria)
+            return false;
+        return true;
     }
 
 

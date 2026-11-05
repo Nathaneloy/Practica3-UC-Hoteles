@@ -4,7 +4,7 @@ import es.unican.ps.domain.TipoHabitacion;
 
 public interface IGestionarHabitaciones {
 
-    public int modificarTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double nuevoPrecio, int nuevasDisponibles);
+    public Boolean modificarTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double nuevoPrecio, int nuevasDisponibles);
 
     public Boolean anhadirTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double precioPorNoche, int disponibles);
 

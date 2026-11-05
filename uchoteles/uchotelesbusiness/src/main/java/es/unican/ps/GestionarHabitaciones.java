@@ -3,6 +3,8 @@ package es.unican.ps;
 import es.unican.ps.business.IGestionarHabitacionesLocal;
 import es.unican.ps.business.IGestionarHabitacionesRemote;
 import es.unican.ps.dao.IHotelDAOLocal;
+import es.unican.ps.domain.Habitacion;
+import es.unican.ps.domain.Hotel;
 import es.unican.ps.domain.TipoHabitacion;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
@@ -14,23 +16,32 @@ public class GestionarHabitaciones implements IGestionarHabitacionesLocal, IGest
     private IHotelDAOLocal hotelDAO;
 
     @Override
-    public int modificarTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double nuevoPrecio,
+    public Boolean modificarTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double nuevoPrecio,
             int nuevasDisponibles) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modificarTipoHabitacion'");
+        Hotel hotel = hotelDAO.hotelPorNombre(nombreHotel);
+        Habitacion habitacion = hotel.getHabitaciones().get(tipo);
+        habitacion.setPrecioPorNoche(nuevoPrecio);
+        habitacion.setDisponibles(nuevasDisponibles);
+        hotel.getHabitaciones().put(tipo, habitacion);
+
+        return hotel == hotelDAO.actulizaHotel(hotel);
     }
 
     @Override
     public Boolean anhadirTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double precioPorNoche,
             int disponibles) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'anhadirTipoHabitacion'");
+        Habitacion habitacion = new Habitacion(disponibles, precioPorNoche, tipo);
+        Hotel hotel = hotelDAO.hotelPorNombre(nombreHotel);
+        hotel.getHabitaciones().put(tipo, habitacion);
+
+        return hotel == hotelDAO.actulizaHotel(hotel);
     }
 
     @Override
     public Boolean eliminarTipoHabitacion(String nombreHotel, TipoHabitacion tipo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarTipoHabitacion'");
+       Hotel hotel = hotelDAO.hotelPorNombre(nombreHotel);
+       hotel.getHabitaciones().remove(tipo);
+       return hotel == hotelDAO.actulizaHotel(hotel);
     }
 
 }

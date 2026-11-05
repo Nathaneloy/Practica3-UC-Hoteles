@@ -15,4 +15,6 @@ public interface IHotelDAO {
     public Hotel eliminaHotel(int id);
 
     public Hotel actulizaHotel(Hotel h);
+
+    public  Hotel hotelPorNombre(String nombre);
 }

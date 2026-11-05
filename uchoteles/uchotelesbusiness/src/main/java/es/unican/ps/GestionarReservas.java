@@ -1,6 +1,7 @@
 package es.unican.ps;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.ps.business.IGestionarReservasLocal;
@@ -14,6 +15,7 @@ import es.unican.ps.domain.DatosPago;
 import es.unican.ps.domain.Habitacion;
 import es.unican.ps.domain.Hotel;
 import es.unican.ps.domain.Reserva;
+import es.unican.ps.exceptions.ReservaNoAccesible;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -28,26 +30,33 @@ public class GestionarReservas implements IGestionarReservasLocal, IInformacionR
 
     @Override
     public Hotel buscarHotelPorNombre(String nombre) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarHotelPorNombre'");
+        return hotelDAO.hotelPorNombre(nombre);
     }
 
     @Override
     public List<Hotel> buscarHotelPorLocalidad(String localidad) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarHotelPorLocalidad'");
+        List<Hotel> hotelesPorLocalidad = new ArrayList<>();
+        List<Hotel> hoteles = hotelDAO.hoteles();
+
+        for (Hotel h : hoteles) {
+            if (h.getLocalidad() == localidad) hotelesPorLocalidad.add(h);
+        }
+        return hotelesPorLocalidad;
     }
 
     @Override
     public Reserva consultarReserva(int idReserva, String dni) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarReserva'");
+        Reserva reserva = reservaDAO.reserva(idReserva);
+        if (reserva == null) return null;
+        if (reserva.getClientes().getDni() == dni) return reserva;
+        throw new ReservaNoAccesible();
     }
 
     @Override
     public List<Reserva> consultarReservasHotel(String nombreHotel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarReservasHotel'");
+        List<Reserva> reservas = reservaDAO.reservas();
+        if (reservas.isEmpty()) return null;
+        return reservas;
     }
 
     @Override
@@ -58,14 +67,15 @@ public class GestionarReservas implements IGestionarReservasLocal, IInformacionR
 
     @Override
     public Boolean bloquearReserva(Reserva reserva) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'bloquearReserva'");
+        reserva.setBloqueada(true);
+        return null != reservaDAO.creaReserva(reserva);
     }
 
     @Override
     public int confirmarReserva(Reserva reserva, DatosClientes cliente, DatosPago pago) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'confirmarReserva'");
+        reserva.setClientes(cliente);
+        reserva.setDatos(pago);
+        return null != reservaDAO.actulizaReserva(reserva);
     }
 
     @Override
