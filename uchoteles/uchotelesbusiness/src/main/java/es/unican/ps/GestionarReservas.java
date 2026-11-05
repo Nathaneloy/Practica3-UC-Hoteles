@@ -3,15 +3,28 @@ package es.unican.ps;
 import java.sql.Date;
 import java.util.List;
 
-import es.unican.ps.business.IGestionarReservas;
-import es.unican.ps.business.IInformacionReservas;
+import es.unican.ps.business.IGestionarReservasLocal;
+import es.unican.ps.business.IGestionarReservasRemote;
+import es.unican.ps.business.IInformacionReservasLocal;
+import es.unican.ps.business.IInformacionReservasRemote;
+import es.unican.ps.dao.IHotelDAOLocal;
+import es.unican.ps.dao.IReservaDAOLocal;
 import es.unican.ps.domain.DatosClientes;
 import es.unican.ps.domain.DatosPago;
 import es.unican.ps.domain.Habitacion;
 import es.unican.ps.domain.Hotel;
 import es.unican.ps.domain.Reserva;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
-public class GestionarReservas implements IGestionarReservas, IInformacionReservas {
+@Stateless
+public class GestionarReservas implements IGestionarReservasLocal, IInformacionReservasLocal, IGestionarReservasRemote, IInformacionReservasRemote {
+
+    @EJB
+    private IHotelDAOLocal hotelDAO;
+
+    @EJB
+    private IReservaDAOLocal reservaDAO;
 
     @Override
     public Hotel buscarHotelPorNombre(String nombre) {

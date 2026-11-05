@@ -1,15 +1,31 @@
 package es.unican.ps.domain;
 
-public class DatosClientes {
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
+
+@SuppressWarnings("serial")
+@NoArgsConstructor 
+@Entity
+@Table(name = "DatosClientes")
+public class DatosClientes implements Serializable {
+    @Id
     private String dni;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String primerApellido; 
     private String segundoApellido; 
+    @Column(nullable = false)
     private String email;
 
 
-    
-    public DatosClientes(String dni, String nombre, String primerApellido, String segundoApellido, String email) {
+
+    public DatosClientes(String dni, String nombre, String primerApellido, String segundoApellido, String email){
         this.dni = dni;
         this.nombre = nombre;
         this.primerApellido = primerApellido;

@@ -1,6 +1,16 @@
 package es.unican.ps.domain;
 
-public class ReservaTipoHabitacion {
+import java.io.Serializable;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
+
+@SuppressWarnings("serial")
+@NoArgsConstructor 
+@Entity
+@Table(name = "ReservaTipoHabitacion")
+public class ReservaTipoHabitacion implements Serializable {
     private int numHabitaciones;
     private double precioPorNoche;
     private Habitacion habitacion;
@@ -12,7 +22,7 @@ public class ReservaTipoHabitacion {
         this.precioPorNoche = precioPorNoche;
         this.habitacion = habitacion;
     }
-    
+
     public int getNumHabitaciones() {
         return numHabitaciones;
     }

@@ -1,9 +1,17 @@
 package es.unican.ps;
 
-import es.unican.ps.business.IGestionarHabitaciones;
+import es.unican.ps.business.IGestionarHabitacionesLocal;
+import es.unican.ps.business.IGestionarHabitacionesRemote;
+import es.unican.ps.dao.IHotelDAOLocal;
 import es.unican.ps.domain.TipoHabitacion;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
-public class GestionarHabitaciones implements IGestionarHabitaciones{
+@Stateless
+public class GestionarHabitaciones implements IGestionarHabitacionesLocal, IGestionarHabitacionesRemote{
+
+    @EJB
+    private IHotelDAOLocal hotelDAO;
 
     @Override
     public int modificarTipoHabitacion(String nombreHotel, TipoHabitacion tipo, Double nuevoPrecio,

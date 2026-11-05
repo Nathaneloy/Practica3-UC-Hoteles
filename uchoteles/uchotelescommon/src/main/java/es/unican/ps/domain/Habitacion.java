@@ -1,9 +1,25 @@
 package es.unican.ps.domain;
 
+import java.io.Serializable;
 
-public class Habitacion {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
+
+@SuppressWarnings("serial")
+@NoArgsConstructor 
+@Entity
+@Table(name = "Habitacion")
+public class Habitacion implements Serializable {
+    @Column(nullable = false)
     private int disponibles;
+    @Column(nullable = false)
     private double precioPorNoche;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoHabitacion tipo;
 
     
@@ -13,7 +29,7 @@ public class Habitacion {
         this.precioPorNoche = precioPorNoche;
         this.tipo = tipo;
     }
-    
+
     public int getDisponibles() {
         return disponibles;
     }
