@@ -39,6 +39,9 @@ public class Hotel implements Serializable{
     @Column(nullable = false)
     private Categoria categoria;
 
+    @OneToMany 
+    @JoinColumn(name="Hotel_FK")
+    private List<Reserva> reservas;
 
     
     public Hotel(String nombre, String direccion, String localidad, int id, Categoria categoria) {
@@ -87,6 +90,8 @@ public class Hotel implements Serializable{
         this.categoria = categoria;
     }
 
+    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -121,6 +126,13 @@ public class Hotel implements Serializable{
         if (categoria != other.categoria)
             return false;
         return true;
+    }
+    
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
 

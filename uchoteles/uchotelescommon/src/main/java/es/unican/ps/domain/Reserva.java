@@ -1,8 +1,8 @@
 package es.unican.ps.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -23,9 +23,9 @@ public class Reserva implements Serializable {
     @GeneratedValue 
     private int id;
     @Column(nullable = false)
-    private Date fechaEntrada;
+    private LocalDate fechaEntrada;
     @Column(nullable = false)
-    private Date fechaSalida;
+    private LocalDate fechaSalida;
     @Column(nullable = false)
     private Boolean bloqueada;
     private DatosPago datos;
@@ -36,7 +36,7 @@ public class Reserva implements Serializable {
 
     
 
-    public Reserva(int id, Date fechaEntrada, Date fechaSalida, Boolean bloqueada, DatosPago datos,
+    public Reserva(int id, LocalDate fechaEntrada, LocalDate fechaSalida, Boolean bloqueada, DatosPago datos,
             DatosClientes clientes) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
@@ -52,16 +52,16 @@ public class Reserva implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Date getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
-    public void setFechaEntrada(Date fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
     public Boolean getBloqueada() {
